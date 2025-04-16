@@ -6,32 +6,19 @@ namespace SpaceInvaders.GameProtection
 {
     internal class Shield : Sprite
     {
-        private static readonly float SCALE = 4f;
+        private const float Scale = 4f;
 
 
-        public override Rectangle Rectangle
-        {
-            get
-            {
-                return new Rectangle(
-                    (int)position.X,
-                    (int)position.Y,
-                    texture.Width * (int)SCALE,
-                    texture.Height * (int)SCALE
+        public override Rectangle Rectangle =>
+            new(
+                (int)Position.X,
+                (int)Position.Y,
+                Texture.Width * (int)Scale,
+                Texture.Height * (int)Scale
 
-                    );
-            }
+            );
 
-        }
         public Shield(Texture2D texture, Vector2 position) : base(texture, position) { }
 
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-            base.Draw(spriteBatch);
-        }
-        public override void Update(GameTime gameTime)
-        {
-            base.Update(gameTime);
-        }
     }
 }

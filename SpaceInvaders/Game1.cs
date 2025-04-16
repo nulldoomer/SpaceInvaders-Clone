@@ -12,13 +12,13 @@ namespace SpaceInvaders
     public class Game1 : Game
     {
         
-        private GraphicsDeviceManager _graphics;
+        private readonly GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private AnimationManager _animationManager;
         
 
         private List<Sprite> _sprites;
-        private List<Alien> _calamarAliens;
+        private List<Alien> _squidAliens;
         private List<Alien> _crabAliens;
         private List<Alien> _octopusAliens;
         private List<Shield> _shields;
@@ -43,28 +43,29 @@ namespace SpaceInvaders
             
             
             var playerTexture = Content.Load<Texture2D>("PlayerSprites/Player-1");
-            var calamarAlienTexture = Content.Load<Texture2D>("Enemies/CalamarAlien/calamar_moving");
+            var squidAlienTexture = Content.Load<Texture2D>
+                ("Enemies/CalamarAlien/calamar_moving");
             var crabAlienTexture = Content.Load<Texture2D>("Enemies/CrabAlien/cangrejo_moving");
             var octopusAlienTexture = Content.Load<Texture2D>("Enemies/OctopusAlien/pulpo_moving");
             var shieldTexture = Content.Load<Texture2D>("Shield Image");
             
-            
-            _calamarAliens = new();
-            _crabAliens = new();
-            _octopusAliens = new();
-            _shields = new();
+            _squidAliens= new List<Alien>();
+            _crabAliens = new List<Alien>();
+            _octopusAliens = new List<Alien>();
+            _shields = new List<Shield>();
             
 
 
-            for (int i = 0; i < 11; i++)
+            for (var i = 0; i < 11; i++)
             {
-                _calamarAliens.Add(new Alien(calamarAlienTexture, new Vector2(275 + i * 60, 150)));
+                _squidAliens.Add(new Alien(squidAlienTexture, new Vector2(275 + i * 
+                    60, 150)));
                 _crabAliens.Add(new Alien(crabAlienTexture, new Vector2(275 + i * 60, 200)));
                 _crabAliens.Add(new Alien(crabAlienTexture, new Vector2(275 + i * 60, 250)));
                 _octopusAliens.Add(new Alien(octopusAlienTexture, new Vector2(275 + i * 60, 300)));
                 _octopusAliens.Add(new Alien(octopusAlienTexture, new Vector2(275 + i * 60, 350)));
             }
-            for(int i = 0; i< 4; i++)
+            for(var i = 0; i< 4; i++)
             {
 
                 _shields.Add(new Shield(shieldTexture, new Vector2(275 + i * 180, 600)));
@@ -72,7 +73,7 @@ namespace SpaceInvaders
             
 
             var playerPosition = new Vector2(600, 770);
-            _sprites = new()
+            _sprites = new List<Sprite>()
             {
                 new Player(playerTexture, playerPosition)
                 {
@@ -138,10 +139,10 @@ namespace SpaceInvaders
             foreach (var sprite in _sprites)
                 sprite.Draw(_spriteBatch);
 
-            foreach(var alien in _calamarAliens)
+            foreach(var alien in _squidAliens)
             {
                 _spriteBatch.Draw(
-                                alien.texture,
+                                alien.Texture,
                                 alien.Rectangle,
                                 _animationManager.GetFrame(),
                                 Color.White
@@ -151,7 +152,7 @@ namespace SpaceInvaders
             foreach(var crab in _crabAliens)
             {
                 _spriteBatch.Draw(
-                                crab.texture,
+                                crab.Texture,
                                 crab.Rectangle,
                                 _animationManager.GetFrame(),
                                 Color.White
@@ -160,7 +161,7 @@ namespace SpaceInvaders
             foreach(var octopus in _octopusAliens)
             {
                 _spriteBatch.Draw(
-                                octopus.texture,
+                                octopus.Texture,
                                 octopus.Rectangle,
                                 _animationManager.GetFrame(),
                                 Color.White

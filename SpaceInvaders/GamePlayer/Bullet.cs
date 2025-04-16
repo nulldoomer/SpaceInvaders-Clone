@@ -11,7 +11,6 @@ namespace SpaceInvaders.GamePlayer
 
         public Bullet(Texture2D texture, Vector2 position) : base(texture, position)
         {
-            position = base.position;
         }
 
         public override void Update(GameTime gameTime, List<Sprite> sprites)
@@ -22,7 +21,7 @@ namespace SpaceInvaders.GamePlayer
             if(_timer > LifeSpan)
                 IsRemoved = true;
 
-            position.Y -= 6;
+            Position.Y -= 6;
             
         }
 

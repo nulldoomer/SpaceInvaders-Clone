@@ -6,23 +6,16 @@ namespace SpaceInvaders.Enemies
 {
     internal class Alien : Sprite
     {
-        private static readonly float SCALE = 2f;
+        private const float Scale= 2f;
 
-
-        public override Rectangle Rectangle 
-        {
-            get
-            {
-                return new Rectangle(
-                    (int)position.X,
-                    (int)position.Y,
-                    texture.Width * (int)SCALE,
-                    texture.Height * (int)SCALE
+        public override Rectangle Rectangle =>
+                new Rectangle(
+                    (int)Position.X,
+                    (int)Position.Y,
+                    Texture.Width * (int)Scale,
+                    Texture.Height * (int)Scale
 
                     );
-            }
-
-        }
 
         public Alien(Texture2D texture, Vector2 position) : base(texture, position)
         {
@@ -38,17 +31,9 @@ namespace SpaceInvaders.Enemies
         }
 
         // TODO: Implement the displacement with collisions 
-        public void Displacement()
+        private void Displacement()
         {
-            position.X += 0.4f;
+            Position.X += 0.4f;
         }
-
-
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-
-            base.Draw(spriteBatch);
-        }
-
     }
 }

@@ -8,23 +8,24 @@ namespace SpaceInvaders.GamePlayer
 {
     internal class Player : Sprite
     {
-
         public Bullet Bullet;
 
         public Player(Texture2D texture, Vector2 position) : base(texture, position)
         {
-
         }
 
         public override void Update(GameTime gameTime)
         {
-            if (Keyboard.GetState().IsKeyDown(Keys.D) || Keyboard.GetState().IsKeyDown(Keys.Right))
+            if (Keyboard.GetState().IsKeyDown(Keys.D) || 
+                Keyboard.GetState().IsKeyDown(Keys.Right))
             {
-                position.X += 6;
+                Position.X += 6;
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.A) || Keyboard.GetState().IsKeyDown(Keys.Left))
+            
+            if (Keyboard.GetState().IsKeyDown(Keys.A) || 
+                Keyboard.GetState().IsKeyDown(Keys.Left))
             {
-                position.X -= 6;
+                Position.X -= 6;
             }
 
             base.Update(gameTime);
@@ -32,16 +33,17 @@ namespace SpaceInvaders.GamePlayer
 
         public override void Update(GameTime gameTime, List<Sprite> sprites)
         {
-            _previousKey = _currentKey;
-            _currentKey = Keyboard.GetState();
+            PreviousKey = CurrentKey;
+            CurrentKey = Keyboard.GetState();
 
-            if(_currentKey.IsKeyDown(Keys.D)||_currentKey.IsKeyDown(Keys.Right))
-                position.X += 6;
-            else if (_currentKey.IsKeyDown(Keys.A)||_currentKey.IsKeyDown
+            if(CurrentKey.IsKeyDown(Keys.D)||CurrentKey.IsKeyDown(Keys.Right))
+                Position.X += 6;
+            else if (CurrentKey.IsKeyDown(Keys.A)|| CurrentKey.IsKeyDown
                 (Keys.Left))
-                position.X -= 6;
+                Position.X -= 6;
 
-            if(_currentKey.IsKeyDown(Keys.W) && _previousKey.IsKeyUp(Keys.W))
+            if(CurrentKey.IsKeyDown(Keys.W) && PreviousKey.IsKeyUp(Keys.W)
+               || CurrentKey.IsKeyDown(Keys.Up) && PreviousKey.IsKeyUp(Keys.Up))
             {
                 AddBullet(sprites);
             }
@@ -50,10 +52,10 @@ namespace SpaceInvaders.GamePlayer
 
         private void AddBullet(List<Sprite> sprites)
         {
-            var bullet = Bullet.Clone() as Bullet;
+            if (Bullet.Clone() is not Bullet bullet) return;
             bullet.LifeSpan = 2f;
-            bullet.position = this.position;
-            bullet.position.X += 23;
+            bullet.Position= Position;
+            bullet.Position.X += 23;
             bullet.Parent = this;
 
             sprites.Add(bullet);

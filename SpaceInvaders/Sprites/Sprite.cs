@@ -8,13 +8,13 @@ namespace SpaceInvaders.Sprites
 {
     internal class Sprite : ICloneable
     {
-        private static readonly float SCALE = 3.5f;
+        private const float Scale = 3.5f;
 
-        public Texture2D texture;
-        public Vector2 position;
+        public readonly Texture2D Texture;
+        public Vector2 Position;
         
-        protected KeyboardState _currentKey;
-        protected KeyboardState _previousKey;
+        protected KeyboardState CurrentKey;
+        protected KeyboardState PreviousKey;
 
         public Sprite Parent;
 
@@ -22,25 +22,20 @@ namespace SpaceInvaders.Sprites
 
         public bool IsRemoved = false;
 
-        public virtual Rectangle Rectangle
+        public virtual Rectangle Rectangle =>
+            new(
+                (int)Position.X,
+                (int)Position.Y,
+                Texture.Width * (int)Scale,
+                Texture.Height * (int)Scale
+
+            );
+
+
+        protected Sprite(Texture2D texture, Vector2 position)
         {
-            get
-            {
-                return new Rectangle(
-                    (int)position.X,
-                    (int)position.Y,
-                    texture.Width * (int)SCALE,
-                    texture.Height * (int)SCALE
-
-                    );
-            }
-        }
-
-
-        public Sprite(Texture2D texture, Vector2 position)
-        {
-            this.texture = texture;
-            this.position = position;
+            Texture = texture;
+            Position = position;
         }
 
         public virtual void Update(GameTime gameTime)
@@ -55,7 +50,7 @@ namespace SpaceInvaders.Sprites
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, Rectangle, Color.White);
+            spriteBatch.Draw(Texture, Rectangle, Color.White);
         }
 
         public object Clone()

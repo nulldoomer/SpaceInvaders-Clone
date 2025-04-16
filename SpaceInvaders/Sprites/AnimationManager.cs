@@ -4,76 +4,65 @@ namespace SpaceInvaders.Sprites
 {
     internal class AnimationManager
     {
-        int numFrames;
-        int numColumns;
-        Vector2 size;
+        private readonly int _numFrames;
+        private readonly int _numColumns;
+        private readonly Vector2 _size;
 
-        int counter;
-        int activeFrame;
-        int interval;
+        private int _counter;
+        private int _activeFrame;
+        private readonly int _interval;
 
-        int rowPos;
-        int colPos;
+        private int _rowPos;
+        private int _colPos;
         public AnimationManager(int numFrames, int numColumns, Vector2 size)
         {
-            this.numFrames = numFrames;
-            this.numColumns = numColumns;
-            this.size = size;
-
-            counter = 0;
-            activeFrame = 0;
-            interval = 30;
-
-            rowPos = 0;
-            colPos = 0;
-
+            _numFrames = numFrames;
+            _numColumns = numColumns;
+            _size = size;
+            _counter = 0;
+            _activeFrame = 0;
+            _interval = 30;
+            _rowPos = 0;
+            _colPos = 0;
         }
 
         public void Update()
         {
-            counter++;
-            if (counter > interval)
-            {
-                counter = 0;
-                NextFrame();
-
-            }
-
+            _counter++;
+            if (_counter <= _interval) return;
+            _counter = 0;
+            NextFrame();
         }
 
-        public void NextFrame()
+        private void NextFrame()
         {
-            activeFrame++;
-            colPos++;
-            if (activeFrame >= numFrames)
+            _activeFrame++;
+            _colPos++;
+            if (_activeFrame >= _numFrames)
             {
                 ResetAnimation();
             }
-
-            if (colPos >= numColumns)
-            {
-                colPos = 0;
-                rowPos++;
-            }
+            
+            if (_colPos < _numColumns) return;
+            _colPos = 0;
+            _rowPos++;
         }
 
-        public void ResetAnimation()
+        private void ResetAnimation()
         {
-            activeFrame = 0;
-            colPos = 0;
-            rowPos = 0;
-
+            _activeFrame = 0;
+            _colPos = 0;
+            _rowPos = 0;
         }
 
         public Rectangle GetFrame()
         {
             return new Rectangle(
-                colPos * (int)size.X,
-                rowPos * (int)size.Y,
-                (int)size.X,
-                (int)size.Y
+                _colPos * (int)_size.X,
+                _rowPos * (int)_size.Y,
+                (int)_size.X,
+                (int)_size.Y
                 );
         }
-
     }
 }
