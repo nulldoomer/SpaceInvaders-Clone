@@ -11,10 +11,10 @@ namespace SpaceInvaders.Enemies
 
         public override Rectangle Rectangle =>
                 new Rectangle(
-                    (int)Position.X,
+                    (int)Position.X + 6,
                     (int)Position.Y,
-                    Texture.Width * (int)Scale,
-                    Texture.Height * (int)Scale
+                    (Texture.Width * (int)Scale) - 12,
+                    (Texture.Height * (int)Scale)
                     );
 
         public Alien(Texture2D texture, Vector2 position) : base(texture,
