@@ -11,11 +11,9 @@ namespace SpaceInvaders
 {
     public class Game1 : Game
     {
-        
         private readonly GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private AnimationManager _animationManager;
-        
 
         private List<Sprite> _sprites;
         private List<Alien> _squidAliens;
@@ -30,17 +28,16 @@ namespace SpaceInvaders
             IsMouseVisible = true;
         }
 
-        protected override void Initialize()
-        {
-            // TODO: Add your initialization logic here
-
-            base.Initialize();
-        }
+        // protected override void Initialize()
+        // {
+        //     // TODO: Add your initialization logic here
+        //
+        //     base.Initialize();
+        // }
 
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            
             
             var playerTexture = Content.Load<Texture2D>("PlayerSprites/Player-1");
             var squidAlienTexture = Content.Load<Texture2D>
@@ -53,8 +50,6 @@ namespace SpaceInvaders
             _crabAliens = new List<Alien>();
             _octopusAliens = new List<Alien>();
             _shields = new List<Shield>();
-            
-
 
             for (var i = 0; i < 11; i++)
             {
@@ -67,11 +62,9 @@ namespace SpaceInvaders
             }
             for(var i = 0; i< 4; i++)
             {
-
                 _shields.Add(new Shield(shieldTexture, new Vector2(275 + i * 180, 600)));
             }
             
-
             var playerPosition = new Vector2(600, 770);
             _sprites = new List<Sprite>()
             {
@@ -81,12 +74,7 @@ namespace SpaceInvaders
                     , playerPosition)
                 }
             };
-            
-
             _animationManager = new AnimationManager(2, 2, new Vector2(16, 8));
-
-
-            
         }
 
         protected override void Update(GameTime gameTime)
@@ -98,23 +86,18 @@ namespace SpaceInvaders
             _graphics.PreferredBackBufferWidth = 1280; 
             _graphics.PreferredBackBufferHeight = 900; 
             _graphics.ApplyChanges();
-            
-
-            
 
             foreach (var sprite in _sprites.ToArray())
             {
                 sprite.Update(gameTime, _sprites);
             }
-
-            for( int i = 0; i<_sprites.Count; i++)
+            for( var i = 0; i<_sprites.Count; i++)
             {
-                if (_sprites[i].IsRemoved)
-                {
-                    _sprites.RemoveAt(i);
-                    i--;
-                }
+                if (!_sprites[i].IsRemoved) continue;
+                _sprites.RemoveAt(i);
+                i--;
             }
+            
             foreach(var shield in _shields)
             {
                 shield.Update(gameTime);

@@ -9,19 +9,14 @@ namespace SpaceInvaders.Sprites
     internal class Sprite : ICloneable
     {
         private const float Scale = 3.5f;
-
         public readonly Texture2D Texture;
         public Vector2 Position;
-        
         protected KeyboardState CurrentKey;
         protected KeyboardState PreviousKey;
-
         public Sprite Parent;
-
         public float LifeSpan = 0f;
-
         public bool IsRemoved = false;
-
+        
         public virtual Rectangle Rectangle =>
             new(
                 (int)Position.X,

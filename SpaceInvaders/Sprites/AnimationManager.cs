@@ -7,13 +7,12 @@ namespace SpaceInvaders.Sprites
         private readonly int _numFrames;
         private readonly int _numColumns;
         private readonly Vector2 _size;
-
         private int _counter;
         private int _activeFrame;
         private readonly int _interval;
-
         private int _rowPos;
         private int _colPos;
+        
         public AnimationManager(int numFrames, int numColumns, Vector2 size)
         {
             _numFrames = numFrames;

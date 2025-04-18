@@ -14,7 +14,6 @@ namespace SpaceInvaders.Enemies
                     (int)Position.Y,
                     Texture.Width * (int)Scale,
                     Texture.Height * (int)Scale
-
                     );
 
         public Alien(Texture2D texture, Vector2 position) : base(texture, position)
