@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using SpaceInvaders.Sprites;
 
-namespace SpaceInvaders.GameProtection
+namespace SpaceInvaders.GameShield
 {
     internal class Shield : Sprite
     {

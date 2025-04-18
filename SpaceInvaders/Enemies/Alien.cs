@@ -7,6 +7,7 @@ namespace SpaceInvaders.Enemies
     internal class Alien : Sprite
     {
         private const float Scale= 2f;
+        private int Hp { get; set; }
 
         public override Rectangle Rectangle =>
                 new Rectangle(
@@ -16,16 +17,19 @@ namespace SpaceInvaders.Enemies
                     Texture.Height * (int)Scale
                     );
 
-        public Alien(Texture2D texture, Vector2 position) : base(texture, position)
+        public Alien(Texture2D texture, Vector2 position) : base(texture,
+            position)
         {
+            Hp = 1;
+        }
 
-
+        public void TakeDamage(int damage)
+        {
+            Hp -= damage;
         }
 
         public override void Update(GameTime gameTime)
         {
-            Displacement();
-            
             base.Update(gameTime);
         }
 
@@ -34,5 +38,6 @@ namespace SpaceInvaders.Enemies
         {
             Position.X += 0.4f;
         }
+        
     }
 }

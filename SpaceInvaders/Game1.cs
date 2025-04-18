@@ -3,9 +3,10 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using SpaceInvaders.Enemies;
 using SpaceInvaders.GamePlayer;
-using SpaceInvaders.GameProtection;
+using SpaceInvaders.GameShield;
 using SpaceInvaders.Sprites;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SpaceInvaders
 {
@@ -28,12 +29,12 @@ namespace SpaceInvaders
             IsMouseVisible = true;
         }
 
-        // protected override void Initialize()
-        // {
-        //     // TODO: Add your initialization logic here
-        //
-        //     base.Initialize();
-        // }
+        protected override void Initialize()
+        {
+            // TODO: Add your initialization logic here
+        
+            base.Initialize();
+        }
 
         protected override void LoadContent()
         {
@@ -54,11 +55,11 @@ namespace SpaceInvaders
             for (var i = 0; i < 11; i++)
             {
                 _squidAliens.Add(new Alien(squidAlienTexture, new Vector2(275 + i * 
-                    60, 150)));
-                _crabAliens.Add(new Alien(crabAlienTexture, new Vector2(275 + i * 60, 200)));
-                _crabAliens.Add(new Alien(crabAlienTexture, new Vector2(275 + i * 60, 250)));
-                _octopusAliens.Add(new Alien(octopusAlienTexture, new Vector2(275 + i * 60, 300)));
-                _octopusAliens.Add(new Alien(octopusAlienTexture, new Vector2(275 + i * 60, 350)));
+                    65, 150)));
+                _crabAliens.Add(new Alien(crabAlienTexture, new Vector2(275 + i * 65, 200)));
+                _crabAliens.Add(new Alien(crabAlienTexture, new Vector2(275 + i * 65, 250)));
+                _octopusAliens.Add(new Alien(octopusAlienTexture, new Vector2(275 + i * 65, 300)));
+                _octopusAliens.Add(new Alien(octopusAlienTexture, new Vector2(275 + i * 65, 350)));
             }
             for(var i = 0; i< 4; i++)
             {
@@ -104,13 +105,39 @@ namespace SpaceInvaders
             }
             _animationManager.Update();
 
-            foreach (var alien in _octopusAliens)
+            foreach (var alien in _octopusAliens.ToList())
             {
+                foreach (var sprite in _sprites)
+                {
+
+                    if (sprite is Bullet bullet && bullet.Rectangle.Intersects(alien.Rectangle))
+                    {
+                        _octopusAliens.Remove(alien);
+                        bullet.IsRemoved = true;
+                        break;
+                    }
+                }
                 alien.Update(gameTime);
             }
-           
+
             base.Update(gameTime);
         }
+        
+        private void DrawRectangle(SpriteBatch spriteBatch, Rectangle rectangle, Color color)
+        {
+            var pixel = new Texture2D(GraphicsDevice, 1, 1);
+            pixel.SetData(new[] { Color.White });
+
+            // Top
+            spriteBatch.Draw(pixel, new Rectangle(rectangle.X, rectangle.Y, rectangle.Width, 1), color);
+            // Bottom
+            spriteBatch.Draw(pixel, new Rectangle(rectangle.X, rectangle.Y + rectangle.Height - 1, rectangle.Width, 1), color);
+            // Left
+            spriteBatch.Draw(pixel, new Rectangle(rectangle.X, rectangle.Y, 1, rectangle.Height), color);
+            // Right
+            spriteBatch.Draw(pixel, new Rectangle(rectangle.X + rectangle.Width - 1, rectangle.Y, 1, rectangle.Height), color);
+        }
+
 
         protected override void Draw(GameTime gameTime)
         {
@@ -155,6 +182,18 @@ namespace SpaceInvaders
             {
                 shield.Draw(_spriteBatch);
             }
+            // En el Draw()
+            foreach (var bullet in _sprites.OfType<Bullet>())
+            {
+                var rect = bullet.Rectangle;
+                DrawRectangle(_spriteBatch, rect, Color.Red);
+            }
+            foreach (var alien in _octopusAliens)
+            {
+                var rect = alien.Rectangle;
+                DrawRectangle(_spriteBatch, rect, Color.Green);
+            }
+ 
             _spriteBatch.End();
             base.Draw(gameTime);
         }

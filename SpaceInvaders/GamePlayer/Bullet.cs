@@ -15,15 +15,13 @@ namespace SpaceInvaders.GamePlayer
 
         public override void Update(GameTime gameTime, List<Sprite> sprites)
         {
-            //To count every second the game is updating, use the _timer
+            //To count every second, the game is updating, use the _timer
             _timer += (float)gameTime.ElapsedGameTime.TotalSeconds; 
-
             if(_timer > LifeSpan)
                 IsRemoved = true;
-
             Position.Y -= 6;
-            
         }
+
 
     }
 }

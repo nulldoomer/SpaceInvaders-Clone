@@ -23,7 +23,6 @@ namespace SpaceInvaders.Sprites
                 (int)Position.Y,
                 Texture.Width * (int)Scale,
                 Texture.Height * (int)Scale
-
             );
 
 
@@ -35,12 +34,10 @@ namespace SpaceInvaders.Sprites
 
         public virtual void Update(GameTime gameTime)
         {
-
         }
 
         public virtual void Update(GameTime gameTime, List<Sprite> sprites)
         {
-
         }
 
         public virtual void Draw(SpriteBatch spriteBatch)

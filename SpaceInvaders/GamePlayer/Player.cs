@@ -27,7 +27,6 @@ namespace SpaceInvaders.GamePlayer
             {
                 Position.X -= 6;
             }
-
             base.Update(gameTime);
         }
 
@@ -47,7 +46,6 @@ namespace SpaceInvaders.GamePlayer
             {
                 AddBullet(sprites);
             }
-
         }
 
         private void AddBullet(List<Sprite> sprites)
