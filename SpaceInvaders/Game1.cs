@@ -228,6 +228,18 @@ namespace SpaceInvaders
                 var rect = alien.Rectangle;
                 DrawRectangle(_spriteBatch, rect, Color.Green);
             }
+            
+            foreach (var alien in _squidAliens)
+            {
+                var rect = alien.Rectangle;
+                DrawRectangle(_spriteBatch, rect, Color.Green);
+            }
+            
+            foreach (var alien in _crabAliens)
+            {
+                var rect = alien.Rectangle;
+                DrawRectangle(_spriteBatch, rect, Color.Green);
+            }
  
             _spriteBatch.End();
             base.Draw(gameTime);
