@@ -19,7 +19,7 @@ namespace SpaceInvaders.GamePlayer
             _timer += (float)gameTime.ElapsedGameTime.TotalSeconds; 
             if(_timer > LifeSpan)
                 IsRemoved = true;
-            Position.Y -= 6;
+            Position.Y -= 12;
         }
 
 

@@ -119,23 +119,58 @@ namespace SpaceInvaders
                 }
                 alien.Update(gameTime);
             }
+            
+            foreach (var alien in _squidAliens.ToList())
+            {
+                foreach (var sprite in _sprites)
+                {
+
+                    if (sprite is Bullet bullet && bullet.Rectangle.Intersects(alien.Rectangle))
+                    {
+                        _squidAliens.Remove(alien);
+                        bullet.IsRemoved = true;
+                        break;
+                    }
+                }
+                alien.Update(gameTime);
+            }
+            
+            foreach (var alien in _crabAliens.ToList())
+            {
+                foreach (var sprite in _sprites)
+                {
+
+                    if (sprite is Bullet bullet && bullet.Rectangle.Intersects(alien.Rectangle))
+                    {
+                        _crabAliens.Remove(alien);
+                        bullet.IsRemoved = true;
+                        break;
+                    }
+                }
+                alien.Update(gameTime);
+            }
 
             base.Update(gameTime);
         }
         
-        private void DrawRectangle(SpriteBatch spriteBatch, Rectangle rectangle, Color color)
+        private void DrawRectangle(SpriteBatch spriteBatch, Rectangle rectangle,
+            Color color)
         {
             var pixel = new Texture2D(GraphicsDevice, 1, 1);
             pixel.SetData(new[] { Color.White });
 
             // Top
-            spriteBatch.Draw(pixel, new Rectangle(rectangle.X, rectangle.Y, rectangle.Width, 1), color);
+            spriteBatch.Draw(pixel, new Rectangle(rectangle.X, rectangle.Y,
+                rectangle.Width, 1), color);
             // Bottom
-            spriteBatch.Draw(pixel, new Rectangle(rectangle.X, rectangle.Y + rectangle.Height - 1, rectangle.Width, 1), color);
+            spriteBatch.Draw(pixel, new Rectangle(rectangle.X, 
+                rectangle.Y + rectangle.Height - 1, rectangle.Width, 1), color);
             // Left
-            spriteBatch.Draw(pixel, new Rectangle(rectangle.X, rectangle.Y, 1, rectangle.Height), color);
+            spriteBatch.Draw(pixel, new Rectangle(rectangle.X, rectangle.Y,
+                1, rectangle.Height), color);
             // Right
-            spriteBatch.Draw(pixel, new Rectangle(rectangle.X + rectangle.Width - 1, rectangle.Y, 1, rectangle.Height), color);
+            spriteBatch.Draw(pixel, new Rectangle(rectangle.X + rectangle.Width - 1, rectangle.Y,
+                1, rectangle.Height), color);
         }
 
 
