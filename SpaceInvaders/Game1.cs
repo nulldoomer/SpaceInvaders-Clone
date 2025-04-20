@@ -6,6 +6,7 @@ using SpaceInvaders.Entities;
 using System.Collections.Generic;
 using System.Linq;
 using SpaceInvaders.Factories;
+using SpaceInvaders.Utils;
 using SpaceInvaders.Utils.Enumerations;
 
 namespace SpaceInvaders
@@ -15,14 +16,10 @@ namespace SpaceInvaders
         private readonly GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private AnimationManager _animationManager;
-        private AlienFactory _alienFactory;
-
-        private List<Alien>  _aliens;
+        private CollisionRectangle  _collisionRectangle;
         
+        private List<Alien>  _aliens;
         private List<Sprite> _sprites;
-        private List<Alien> _squidAliens;
-        private List<Alien> _crabAliens;
-        private List<Alien> _octopusAliens;
         private List<Shield> _shields;
         
         public Game1()
@@ -50,20 +47,16 @@ namespace SpaceInvaders
             var octopusAlienTexture = Content.Load<Texture2D>("Enemies/OctopusAlien/pulpo_moving");
             var shieldTexture = Content.Load<Texture2D>("Shield Image");
             
-            _alienFactory = new AlienFactory();
             _aliens = new List<Alien>();
-            _squidAliens= new List<Alien>();
-            _crabAliens = new List<Alien>();
-            _octopusAliens = new List<Alien>();
             _shields = new List<Shield>();
 
             for (var i = 0; i < 11; i++)
             {
-                _squidAliens.Add(AlienFactory.CreateAlien(AlienType.Squid,new Vector2(275 + i * 65, 150),squidAlienTexture));
-                _crabAliens.Add(AlienFactory.CreateAlien(AlienType.Crab, new Vector2(275 + i * 65, 200),crabAlienTexture));
-                _crabAliens.Add(AlienFactory.CreateAlien(AlienType.Crab, new Vector2(275 + i * 65, 250),crabAlienTexture));
-                _octopusAliens.Add(AlienFactory.CreateAlien(AlienType.Octopus, new Vector2(275 + i * 65, 300),octopusAlienTexture));
-                _octopusAliens.Add(AlienFactory.CreateAlien(AlienType.Octopus, new Vector2(275 + i * 65, 350),octopusAlienTexture));
+                _aliens.Add(AlienFactory.CreateAlien(AlienType.Squid,new Vector2(275 + i * 65, 150),squidAlienTexture));
+                _aliens.Add(AlienFactory.CreateAlien(AlienType.Crab, new Vector2(275 + i * 65, 200),crabAlienTexture));
+                _aliens.Add(AlienFactory.CreateAlien(AlienType.Crab, new Vector2(275 + i * 65, 250),crabAlienTexture));
+                _aliens.Add(AlienFactory.CreateAlien(AlienType.Octopus, new Vector2(275 + i * 65, 300),octopusAlienTexture));
+                _aliens.Add(AlienFactory.CreateAlien(AlienType.Octopus, new Vector2(275 + i * 65, 350),octopusAlienTexture));
             }
             for(var i = 0; i< 4; i++)
             {
@@ -109,14 +102,14 @@ namespace SpaceInvaders
             }
             _animationManager.Update();
 
-            foreach (var alien in _octopusAliens.ToList())
+            foreach (var alien in _aliens.ToList())
             {
                 foreach (var sprite in _sprites)
                 {
 
                     if (sprite is Bullet bullet && bullet.Rectangle.Intersects(alien.Rectangle))
                     {
-                        _octopusAliens.Remove(alien);
+                        _aliens.Remove(alien);
                         bullet.IsRemoved = true;
                         break;
                     }
@@ -124,59 +117,10 @@ namespace SpaceInvaders
                 alien.Update(gameTime);
             }
             
-            foreach (var alien in _squidAliens.ToList())
-            {
-                foreach (var sprite in _sprites)
-                {
-
-                    if (sprite is Bullet bullet && bullet.Rectangle.Intersects(alien.Rectangle))
-                    {
-                        _squidAliens.Remove(alien);
-                        bullet.IsRemoved = true;
-                        break;
-                    }
-                }
-                alien.Update(gameTime);
-            }
-            
-            foreach (var alien in _crabAliens.ToList())
-            {
-                foreach (var sprite in _sprites)
-                {
-
-                    if (sprite is Bullet bullet && bullet.Rectangle.Intersects(alien.Rectangle))
-                    {
-                        _crabAliens.Remove(alien);
-                        bullet.IsRemoved = true;
-                        break;
-                    }
-                }
-                alien.Update(gameTime);
-            }
 
             base.Update(gameTime);
         }
         
-        private void DrawRectangle(SpriteBatch spriteBatch, Rectangle rectangle,
-            Color color)
-        {
-            var pixel = new Texture2D(GraphicsDevice, 1, 1);
-            pixel.SetData(new[] { Color.White });
-
-            // Top
-            spriteBatch.Draw(pixel, new Rectangle(rectangle.X, rectangle.Y,
-                rectangle.Width, 1), color);
-            // Bottom
-            spriteBatch.Draw(pixel, new Rectangle(rectangle.X, 
-                rectangle.Y + rectangle.Height - 1, rectangle.Width, 1), color);
-            // Left
-            spriteBatch.Draw(pixel, new Rectangle(rectangle.X, rectangle.Y,
-                1, rectangle.Height), color);
-            // Right
-            spriteBatch.Draw(pixel, new Rectangle(rectangle.X + rectangle.Width - 1, rectangle.Y,
-                1, rectangle.Height), color);
-        }
-
 
         protected override void Draw(GameTime gameTime)
         {
@@ -188,35 +132,18 @@ namespace SpaceInvaders
             foreach (var sprite in _sprites)
                 sprite.Draw(_spriteBatch);
 
-            foreach(var alien in _squidAliens)
+            foreach (var alien in _aliens)
             {
                 _spriteBatch.Draw(
-                                alien.Texture,
-                                alien.Rectangle,
-                                _animationManager.GetFrame(),
-                                Color.White
-                                );
+                    alien.Texture,
+                    alien.Rectangle, 
+                    _animationManager.GetFrame(),
+                    Color.White
+                    );
 
+                _collisionRectangle= new CollisionRectangle(_spriteBatch, alien.Rectangle, Color.Azure);
             }
-            foreach(var crab in _crabAliens)
-            {
-                _spriteBatch.Draw(
-                                crab.Texture,
-                                crab.Rectangle,
-                                _animationManager.GetFrame(),
-                                Color.White
-                                );
-            }
-            foreach(var octopus in _octopusAliens)
-            {
-                _spriteBatch.Draw(
-                                octopus.Texture,
-                                octopus.Rectangle,
-                                _animationManager.GetFrame(),
-                                Color.White
-                                );
 
-            }
             foreach (var shield in _shields)
             {
                 shield.Draw(_spriteBatch);
@@ -225,24 +152,7 @@ namespace SpaceInvaders
             foreach (var bullet in _sprites.OfType<Bullet>())
             {
                 var rect = bullet.Rectangle;
-                DrawRectangle(_spriteBatch, rect, Color.Red);
-            }
-            foreach (var alien in _octopusAliens)
-            {
-                var rect = alien.Rectangle;
-                DrawRectangle(_spriteBatch, rect, Color.Green);
-            }
-            
-            foreach (var alien in _squidAliens)
-            {
-                var rect = alien.Rectangle;
-                DrawRectangle(_spriteBatch, rect, Color.Green);
-            }
-            
-            foreach (var alien in _crabAliens)
-            {
-                var rect = alien.Rectangle;
-                DrawRectangle(_spriteBatch, rect, Color.Green);
+                _collisionRectangle = new CollisionRectangle(_spriteBatch, rect, Color.Red);
             }
  
             _spriteBatch.End();
