@@ -1,8 +1,9 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SpaceInvaders.Entities;
 
-namespace SpaceInvaders.Enemies;
+namespace SpaceInvaders.Factories;
 
 public class AlienFactory
 {

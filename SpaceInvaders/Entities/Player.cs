@@ -1,10 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using SpaceInvaders.Sprites;
+using SpaceInvaders.Core;
 using System.Collections.Generic;
 
-namespace SpaceInvaders.GamePlayer
+namespace SpaceInvaders.Entities
 {
     internal class Player : Sprite
     {

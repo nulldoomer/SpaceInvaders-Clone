@@ -1,13 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SpaceInvaders.Sprites;
+using SpaceInvaders.Core;
 
-namespace SpaceInvaders.Enemies
+namespace SpaceInvaders.Entities
 {
     public class Alien : Sprite
     {
         private const float Scale= 2f;
-        private int Hp { get; set; }
 
         public override Rectangle Rectangle =>
                 new Rectangle(
@@ -20,12 +19,6 @@ namespace SpaceInvaders.Enemies
         public Alien(Texture2D texture, Vector2 position) : base(texture,
             position)
         {
-            Hp = 1;
-        }
-
-        public void TakeDamage(int damage)
-        {
-            Hp -= damage;
         }
 
         public override void Update(GameTime gameTime)

@@ -1,9 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SpaceInvaders.Sprites;
 using System.Collections.Generic;
+using SpaceInvaders.Core;
 
-namespace SpaceInvaders.GamePlayer
+namespace SpaceInvaders.Entities
 {
     internal class Bullet: Sprite
     {

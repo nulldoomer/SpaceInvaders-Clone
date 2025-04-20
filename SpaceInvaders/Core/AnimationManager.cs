@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace SpaceInvaders.Sprites
+namespace SpaceInvaders.Core
 {
     internal class AnimationManager
     {

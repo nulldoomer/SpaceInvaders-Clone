@@ -1,8 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SpaceInvaders.Sprites;
+using SpaceInvaders.Core;
 
-namespace SpaceInvaders.GameShield
+namespace SpaceInvaders.Entities
 {
     internal class Shield : Sprite
     {

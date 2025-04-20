@@ -1,10 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using SpaceInvaders.Enemies;
-using SpaceInvaders.GamePlayer;
-using SpaceInvaders.GameShield;
-using SpaceInvaders.Sprites;
+using SpaceInvaders.Core;
+using SpaceInvaders.Entities;
 using System.Collections.Generic;
 using System.Linq;
 
