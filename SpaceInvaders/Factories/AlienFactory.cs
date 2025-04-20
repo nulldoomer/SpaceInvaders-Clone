@@ -2,24 +2,23 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SpaceInvaders.Entities;
+using SpaceInvaders.Utils.Enumerations;
 
 namespace SpaceInvaders.Factories;
 
 public class AlienFactory
 {
-    public static Alien CreateAlien(string type, Vector2 position,
+    public static Alien CreateAlien(AlienType type, Vector2 position,
         Texture2D texture)
     {
-        switch (type)
+        return type switch
         {
-            case "Squid":
-                return new Alien(texture, position);
-            case "Crab":
-                return new Alien(texture, position);
-            case "Octopus":
-                return new Alien(texture, position);
-            default:
-                throw new ArgumentException("Unknown alien type: " + type);
-        }
+            AlienType.Squid => new Alien(texture, position),
+            AlienType.Crab => new Alien(texture, position),
+            AlienType.Octopus => new Alien(texture, position),
+            _ => throw new ArgumentException("Unknown alien type: " + type)
+        };
     }
+    
+    
 }

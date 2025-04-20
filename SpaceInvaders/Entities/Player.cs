@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using SpaceInvaders.Core;
@@ -6,7 +7,7 @@ using System.Collections.Generic;
 
 namespace SpaceInvaders.Entities
 {
-    internal class Player : Sprite
+    internal class Player : Sprite, ICloneable
     {
         public Bullet Bullet;
 

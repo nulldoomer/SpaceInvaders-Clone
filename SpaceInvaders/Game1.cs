@@ -5,6 +5,8 @@ using SpaceInvaders.Core;
 using SpaceInvaders.Entities;
 using System.Collections.Generic;
 using System.Linq;
+using SpaceInvaders.Factories;
+using SpaceInvaders.Utils.Enumerations;
 
 namespace SpaceInvaders
 {
@@ -13,7 +15,10 @@ namespace SpaceInvaders
         private readonly GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private AnimationManager _animationManager;
+        private AlienFactory _alienFactory;
 
+        private List<Alien>  _aliens;
+        
         private List<Sprite> _sprites;
         private List<Alien> _squidAliens;
         private List<Alien> _crabAliens;
@@ -45,6 +50,8 @@ namespace SpaceInvaders
             var octopusAlienTexture = Content.Load<Texture2D>("Enemies/OctopusAlien/pulpo_moving");
             var shieldTexture = Content.Load<Texture2D>("Shield Image");
             
+            _alienFactory = new AlienFactory();
+            _aliens = new List<Alien>();
             _squidAliens= new List<Alien>();
             _crabAliens = new List<Alien>();
             _octopusAliens = new List<Alien>();
@@ -52,12 +59,11 @@ namespace SpaceInvaders
 
             for (var i = 0; i < 11; i++)
             {
-                _squidAliens.Add(new Alien(squidAlienTexture, new Vector2(275 + i * 
-                    65, 150)));
-                _crabAliens.Add(new Alien(crabAlienTexture, new Vector2(275 + i * 65, 200)));
-                _crabAliens.Add(new Alien(crabAlienTexture, new Vector2(275 + i * 65, 250)));
-                _octopusAliens.Add(new Alien(octopusAlienTexture, new Vector2(275 + i * 65, 300)));
-                _octopusAliens.Add(new Alien(octopusAlienTexture, new Vector2(275 + i * 65, 350)));
+                _squidAliens.Add(AlienFactory.CreateAlien(AlienType.Squid,new Vector2(275 + i * 65, 150),squidAlienTexture));
+                _crabAliens.Add(AlienFactory.CreateAlien(AlienType.Crab, new Vector2(275 + i * 65, 200),crabAlienTexture));
+                _crabAliens.Add(AlienFactory.CreateAlien(AlienType.Crab, new Vector2(275 + i * 65, 250),crabAlienTexture));
+                _octopusAliens.Add(AlienFactory.CreateAlien(AlienType.Octopus, new Vector2(275 + i * 65, 300),octopusAlienTexture));
+                _octopusAliens.Add(AlienFactory.CreateAlien(AlienType.Octopus, new Vector2(275 + i * 65, 350),octopusAlienTexture));
             }
             for(var i = 0; i< 4; i++)
             {
