@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace SpaceInvaders.Sprites
 {
-    internal class Sprite : ICloneable
+    public class Sprite : ICloneable
     {
         private const float Scale = 3.5f;
         public readonly Texture2D Texture;

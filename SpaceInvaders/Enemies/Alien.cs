@@ -4,7 +4,7 @@ using SpaceInvaders.Sprites;
 
 namespace SpaceInvaders.Enemies
 {
-    internal class Alien : Sprite
+    public class Alien : Sprite
     {
         private const float Scale= 2f;
         private int Hp { get; set; }
@@ -30,10 +30,12 @@ namespace SpaceInvaders.Enemies
 
         public override void Update(GameTime gameTime)
         {
+            Displacement();
             base.Update(gameTime);
         }
 
-        // TODO: Implement the displacement with collisions 
+        // TODO: Implement the displacement with collisions, every time the
+        // animation occurs it have to displace
         private void Displacement()
         {
             Position.X += 0.4f;
