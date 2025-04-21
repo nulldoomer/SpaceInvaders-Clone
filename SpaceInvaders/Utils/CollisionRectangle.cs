@@ -3,15 +3,13 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace SpaceInvaders.Utils;
 
-public class CollisionRectangle:Game
+public class CollisionRectangle
 {
-    
-    public CollisionRectangle(SpriteBatch spriteBatch, Rectangle rectangle,
+    public CollisionRectangle(GraphicsDevice graphicsDevice, SpriteBatch spriteBatch, Rectangle rectangle,
         Color color)
     {
-        var pixel = new Texture2D(GraphicsDevice, 1, 1);
+        var pixel = new Texture2D(graphicsDevice, 1, 1);
         pixel.SetData(new[] { Color.White });
-
         // Top
         spriteBatch.Draw(pixel, new Rectangle(rectangle.X, rectangle.Y,
             rectangle.Width, 1), color);

@@ -79,8 +79,6 @@ namespace SpaceInvaders
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-            
-            //Changing the resolution
             _graphics.PreferredBackBufferWidth = 1280; 
             _graphics.PreferredBackBufferHeight = 900; 
             _graphics.ApplyChanges();
@@ -141,7 +139,7 @@ namespace SpaceInvaders
                     Color.White
                     );
 
-                _collisionRectangle= new CollisionRectangle(_spriteBatch, alien.Rectangle, Color.Azure);
+                _collisionRectangle= new CollisionRectangle(GraphicsDevice,_spriteBatch, alien.Rectangle, Color.Azure);
             }
 
             foreach (var shield in _shields)
@@ -152,7 +150,7 @@ namespace SpaceInvaders
             foreach (var bullet in _sprites.OfType<Bullet>())
             {
                 var rect = bullet.Rectangle;
-                _collisionRectangle = new CollisionRectangle(_spriteBatch, rect, Color.Red);
+                _collisionRectangle = new CollisionRectangle(GraphicsDevice,_spriteBatch, rect, Color.Red);
             }
  
             _spriteBatch.End();
