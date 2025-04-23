@@ -2,7 +2,7 @@
 
 namespace SpaceInvaders.Core
 {
-    internal class AnimationManager
+    public class AnimationManager
     {
         private readonly int _numFrames;
         private readonly int _numColumns;

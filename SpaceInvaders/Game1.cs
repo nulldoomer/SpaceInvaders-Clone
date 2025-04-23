@@ -19,7 +19,7 @@ namespace SpaceInvaders
         private CollisionRectangle  _collisionRectangle;
         
         private List<Alien>  _aliens;
-        private List<Sprite> _sprites;
+        private List<Sprite> _playerSprites;
         private List<Shield> _shields;
         
         public Game1()
@@ -64,7 +64,7 @@ namespace SpaceInvaders
             }
             
             var playerPosition = new Vector2(600, 770);
-            _sprites = new List<Sprite>()
+            _playerSprites = new List<Sprite>()
             {
                 new Player(playerTexture, playerPosition)
                 {
@@ -83,14 +83,14 @@ namespace SpaceInvaders
             _graphics.PreferredBackBufferHeight = 900; 
             _graphics.ApplyChanges();
 
-            foreach (var sprite in _sprites.ToArray())
+            foreach (var sprite in _playerSprites.ToArray())
             {
-                sprite.Update(gameTime, _sprites);
+                sprite.Update(gameTime, _playerSprites);
             }
-            for( var i = 0; i<_sprites.Count; i++)
+            for( var i = 0; i<_playerSprites.Count; i++)
             {
-                if (!_sprites[i].IsRemoved) continue;
-                _sprites.RemoveAt(i);
+                if (!_playerSprites[i].IsRemoved) continue;
+                _playerSprites.RemoveAt(i);
                 i--;
             }
             
@@ -102,15 +102,13 @@ namespace SpaceInvaders
 
             foreach (var alien in _aliens.ToList())
             {
-                foreach (var sprite in _sprites)
+                foreach (var sprite in _playerSprites)
                 {
-
-                    if (sprite is Bullet bullet && bullet.Rectangle.Intersects(alien.Rectangle))
-                    {
-                        _aliens.Remove(alien);
-                        bullet.IsRemoved = true;
-                        break;
-                    }
+                    if (sprite is not Bullet bullet ||
+                        !bullet.Rectangle.Intersects(alien.Rectangle)) continue;
+                    _aliens.Remove(alien);
+                    bullet.IsRemoved = true;
+                    break;
                 }
                 alien.Update(gameTime);
             }
@@ -127,7 +125,7 @@ namespace SpaceInvaders
             // TODO: Add your drawing code here
             _spriteBatch.Begin(samplerState : SamplerState.PointClamp);
 
-            foreach (var sprite in _sprites)
+            foreach (var sprite in _playerSprites)
                 sprite.Draw(_spriteBatch);
 
             foreach (var alien in _aliens)
@@ -146,8 +144,7 @@ namespace SpaceInvaders
             {
                 shield.Draw(_spriteBatch);
             }
-            // En el Draw()
-            foreach (var bullet in _sprites.OfType<Bullet>())
+            foreach (var bullet in _playerSprites.OfType<Bullet>())
             {
                 var rect = bullet.Rectangle;
                 _collisionRectangle = new CollisionRectangle(GraphicsDevice,_spriteBatch, rect, Color.Red);
